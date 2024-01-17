@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "algebrite": "^1.4.0",
+    "big.js": "^6.2.1",
+    "bignumber.js": "^9.1.2",
+    "mathjs": "^12.3.0"
+  }
+}
