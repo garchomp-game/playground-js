@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "dependencies": {
     "algebrite": "^1.4.0",
     "big.js": "^6.2.1",

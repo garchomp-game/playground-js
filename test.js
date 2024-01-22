@@ -1,13 +1,34 @@
-import BigNumber from 'bignumber.js';
+process.stdin.resume();
+process.stdin.setEncoding('utf8');
+// 自分の得意な言語で
+// Let's チャレンジ！！
 
-function sumRangeWithBigNumberJs(min, max) {
-    let bigMin = new BigNumber(min);
-    let bigMax = new BigNumber(max);
-    let totalNumbers = bigMax.minus(bigMin).plus(1);
-    let sum = totalNumbers.times(bigMin.plus(bigMax)).div(2);
-    return sum.toFixed(); // 数値を文字列として出力
+function customLoop(value, kaigyou) {
+  for(let i = 1; i <= value; i++) {
+    process.stdout.write(String(i));
+    if(i != value) {
+      process.stdout.write(" ")
+    }
+    if(kaigyou && i == value) {
+      process.stdout.write("\n")
+    }
+  }
 }
 
-let min = 987543;
-let max = 587490358734523;
-console.log(sumRangeWithBigNumberJs(min, max));
+var lines = [];
+var reader = require('readline').createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+reader.on('line', (line) => {
+  lines.push(line);
+});
+reader.on('close', () => {
+  let count = lines[0];
+  let values = lines[1].split(" ");
+  let checkLast = true;
+  for(let i = 1; i <= count; i ++) {
+    if(i == count) checkLast = false
+    customLoop(values[i - 1], checkLast);
+  }
+});
