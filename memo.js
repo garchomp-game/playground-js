@@ -1,97 +1,71 @@
-// 九九の表を作る
-// スペース二つとバーティカルライン( | )で、数字は二桁で統一
+process.stdin.resume();
+process.stdin.setEncoding("utf8");
+// 自分の得意な言語で
+// Let's チャレンジ！！
+var lines = [];
+var reader = require("readline").createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+reader.on("line", (line) => {
+  lines.push(line);
+});
+reader.on("close", () => {
+  /**
+   * 指定された値でセルを生成する関数
+   * val1 と val2 が指定されている場合、フォーマットされた文字列 (val1, val2) を返す
+   * そうでなければ i と j の乗算結果を返す
+   * @param {number} i - 行のインデックス
+   * @param {number} j - 列のインデックス
+   * @param {number} [val1] - 任意の値1
+   * @param {number} [val2] - 任意の値2
+   * @param {number} pad - 文字列のパディング幅
+   * @return {string} 生成されたセルの文字列
+   */
+  function generateCellValue(i, j, val1, val2, pad) {
+    const result =
+      val1 !== undefined && val2 !== undefined
+        ? `(${String(val1).padStart(pad)}, ${String(val2).padStart(pad)})`
+        : i * j;
+    return result.toString();
+  }
 
-for (let i = 1; i <= 9; i++) {
-  for (let j = 1; j <= 9; j++) {
-    let value = String(i * j);
-    if (j !== 9) {
-      process.stdout.write(`${value.padStart(2)} | `);
-    } else {
-      process.stdout.write(`${value.padStart(2)}`);
+  /**
+   * 表の一行を生成する関数
+   * @param {number} rowNum - 行の数
+   * @param {number} colNum - 列の数
+   * @param {number} [val1] - 任意の値1
+   * @param {number} [val2] - 任意の値2
+   * @param {number} pad - セルの文字列のパディング幅
+   * @return {string} 生成された行の文字列
+   */
+  function generateRow(rowNum, colNum, val1, val2, pad) {
+    return Array.from({ length: colNum }, (_, j) =>
+      generateCellValue(rowNum, j + 1, val1, val2, pad),
+    ).join(" | ");
+  }
+
+  /**
+   * 表の区切り行を生成する関数
+   * @param {number} colNum - 列の数
+   * @param {number} col - 1つのセルの文字数
+   * @return {string} 生成された区切り行の文字列
+   */
+  function generateSeparatorRow(colNum, col) {
+    const totalLength = col * colNum + 3 * (colNum - 1);
+    return "=".repeat(totalLength);
+  }
+
+  // メインの処理
+  function generateTable(height, width, col, pad, val1, val2) {
+    for (let i = 1; i <= height; i++) {
+      console.log(generateRow(i, width, val1, val2, pad));
+      if (i !== height) {
+        console.log(generateSeparatorRow(width, col));
+      }
     }
-    // 最終行でなければ=で区切る
   }
-  if (i !== 9) {
-    process.stdout.write("\n");
-    let num = 2 * 9 + 3 * 8;
-    let str = "";
-    for (let k = 0; k < num; k++) {
-      str += "=";
-    }
-    process.stdout.write(str);
-    process.stdout.write("\n");
-  }
-}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// 定数の定義
-const MAX_NUMBER = 9; // 九九の最大数
-const DIGIT_WIDTH = 2; // 各数値の幅 (2桁)
-const SEPARATOR_WIDTH = 3; // "|" とその前後のスペースの幅
-
-/**
- * 九九の各セルを生成する関数
- * @param {number} i - 乗算の左側の数
- * @param {number} j - 乗算の右側の数
- * @return {string} 乗算結果の文字列（指定した幅でパディングされた）
- */
-function generateMultiplicationCell(i, j) {
-  return (i * j).toString().padStart(DIGIT_WIDTH);
-}
-
-/**
- * 九九の一行を生成する関数
- * @param {number} i - 生成する行の数
- * @return {string} 九九の行の文字列
- */
-function generateMultiplicationRow(i) {
-  // Array.fromとmapを使用して九九の一行を生成
-  return Array.from({ length: MAX_NUMBER }, (_, j) =>
-    generateMultiplicationCell(i, j + 1),
-  ).join(" | ");
-}
-
-/**
- * 表の区切り行を生成する関数
- * @return {string} 区切り行の文字列
- */
-function generateSeparatorRow() {
-  // 全体の長さを計算し、等号で埋めた文字列を生成
-  const totalLength =
-    DIGIT_WIDTH * MAX_NUMBER + SEPARATOR_WIDTH * (MAX_NUMBER - 1);
-  return "=".repeat(totalLength);
-}
-
-// メインの処理
-for (let i = 1; i <= MAX_NUMBER; i++) {
-  console.log(generateMultiplicationRow(i));
-  // 最後の行以外では区切り行を出力
-  if (i !== MAX_NUMBER) {
-    console.log(generateSeparatorRow());
-  }
-}
+  let [height, width, val1, val2] = lines[0].split(" ").map(Number);
+  generateTable(height, width, 22, 9, val1, val2); // 特定の値での九九
+});
