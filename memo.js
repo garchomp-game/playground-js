@@ -69,3 +69,4 @@ reader.on("close", () => {
   let [height, width, val1, val2] = lines[0].split(" ").map(Number);
   generateTable(height, width, 22, 9, val1, val2); // 特定の値での九九
 });
+
