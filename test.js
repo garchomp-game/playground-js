@@ -10,16 +10,29 @@ var reader = require("readline").createInterface({
 reader.on("line", (line) => {
   lines.push(line);
 });
+
 reader.on("close", () => {
-  let values = [];
-  let errCount = 0;
-  let count = Number(lines[0]);
-  for(let i = 1; i < lines.length; i++) {
-    if(lines[i] > count || values.includes(lines[i])) {
-      errCount++;
+  let aGroupCount = Number(lines[0]);
+  let aGroup = [];
+  for (let i = 1; i <= aGroupCount; i++) {
+    aGroup.push(Number(lines[i]));
+  }
+  let bGroupCount = Number(lines[aGroupCount + 1]);
+  let bGroup = [];
+  for (let i = aGroupCount + 2; i <= aGroupCount + bGroupCount + 1; i++) {
+    bGroup.push(Number(lines[i]));
+  }
+  let changeGroup = "A";
+  for (let i = 1; i <= 31; i++) {
+    if (aGroup.includes(i) && bGroup.includes(i)) {
+      console.log(changeGroup);
+      changeGroup == "A" ? (changeGroup = "B") : (changeGroup = "A");
+    } else if (aGroup.includes(i)) {
+      console.log("A");
+    } else if (bGroup.includes(i)) {
+      console.log("B");
     } else {
-      values.push(lines[i]); 
+      console.log("x");
     }
   }
-  console.log(errCount)
 });
