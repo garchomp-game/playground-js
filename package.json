@@ -1,9 +1,14 @@
 {
-  "type": "module",
+  "name": "htmx-node-example",
+  "version": "1.0.0",
+  "description": "A simple HTMX and Node.js example",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
-    "algebrite": "^1.4.0",
-    "big.js": "^6.2.1",
-    "bignumber.js": "^9.1.2",
-    "mathjs": "^12.3.0"
-  }
+    "express": "^4.17.1"
+  },
+  "author": "",
+  "license": "ISC"
 }

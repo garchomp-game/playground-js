@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>HTMX and JSON Example</title>
+    <script src="https://unpkg.com/htmx.org"></script>
+  </head>
+  <body>
+    <div hx-get="/sample" hx-trigger="load, click delay:1s" hx-swap="outerHTML"></div>
+  </body>
+  <script>
+  document.addEventListener('data', function (evt) {
+    const container = document.querySelector('[hx-get="/sample"]');
+    container.innerHTML =
+      `
+      <p>メッセージ：${data.message}</p>
+      <p>アンサー：${data.answer}</p>
+      `;
+  });
+  </script>
+</html>
