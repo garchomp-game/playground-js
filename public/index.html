@@ -1,21 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>HTMX and JSON Example</title>
-    <script src="https://unpkg.com/htmx.org"></script>
-  </head>
-  <body>
-    <div hx-get="/sample" hx-trigger="load, click delay:1s" hx-swap="outerHTML"></div>
-  </body>
+
+<head>
+  <meta charset="UTF-8">
+  <title>HTMX and JSON Example</title>
+  <script src="https://unpkg.com/htmx.org"></script>
+</head>
+
+<body>
+
+  <div id="data-container" hx-get="/api/data" hx-trigger="load"></div>
+
   <script>
-  document.addEventListener('data', function (evt) {
-    const container = document.querySelector('[hx-get="/sample"]');
-    container.innerHTML =
-      `
-      <p>メッセージ：${data.message}</p>
-      <p>アンサー：${data.answer}</p>
-      `;
-  });
+    document.body.addEventListener('htmx:afterOnLoad', function (evt) {
+      // HTMXリクエストがJSONを返した場合のみ処理
+      if (
+        evt
+          .detail
+          .xhr
+          .getResponseHeader("Content-Type")
+          .includes("application/json")
+      ) {
+        var data = JSON.parse(evt.detail.xhr.responseText);
+        var container = document.getElementById('data-container');
+        // メッセージとアンサーを表示
+        container.innerHTML =
+          `
+            <p>メッセージ：${data.message}</p>
+            <p>アンサー：${data.answer}</p>
+          `;
+      }
+    });
   </script>
+
+</body>
+
 </html>

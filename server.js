@@ -5,8 +5,8 @@ const port = 3000;
 
 app.use(express.static('public'));
 
-app.get('/sample', (_, res) => {
-  res.json({ data: { message: 'HTMXからのリクエストを受け取りました！', answer: 42 } });
+app.get('/api/data', (_, res) => {
+  res.json({ message: 'HTMXからのリクエストを受け取りました！', answer: 42 });
 });
 
 app.listen(port, () => {
