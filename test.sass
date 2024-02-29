@@ -1,0 +1,59 @@
+// 変数定義
+$primary-color: #333
+$secondary-color: #666
+$padding: 20px
+
+// ミックスイン定義
+=mixin-border-radius($radius)
+  -webkit-border-radius: $radius
+  -moz-border-radius: $radius
+  border-radius: $radius
+
+// ベーススタイル
+body
+  font-family: Helvetica, Arial, sans-serif
+  font-size: 16px
+  color: $primary-color
+
+// リンクスタイル
+a
+  color: $secondary-color
+  &:hover
+    color: darken($secondary-color, 10%)
+
+// ナビゲーションスタイル
+.nav
+  list-style: none
+  padding: 0
+  li
+    display: inline-block
+    margin-right: 10px
+    a
+      padding: $padding
+      background-color: $secondary-color
+      color: #fff
+      +mixin-border-radius(5px)
+
+// コンテンツエリア
+.content
+  padding: $padding
+  background-color: lighten($secondary-color, 10%)
+  section
+    margin-bottom: $padding
+    &:last-child
+      margin-bottom: 0
+
+// 継承を使用
+.error
+  @extend .content
+  background-color: #f00
+  color: #fff
+  p
+    font-weight: bold
+
+// メディアクエリ
+@media (max-width: 600px)
+  .nav
+    li
+      display: block
+      margin-right: 0
